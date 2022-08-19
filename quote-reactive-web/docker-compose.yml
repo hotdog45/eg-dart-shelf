@@ -1,0 +1,39 @@
+version: "2.6"
+
+services:
+  mongo:
+    image: mongo:4.4.15
+    hostname: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "${PWD}/mongodata:/data/db"
+    networks:
+      - network-reactive
+
+  quote-reactive-backend:
+    build:
+      context: ../quote-reactive-backend
+    image: quote-reactive-backend-tpd
+    environment:
+      # Overrides the host in the Spring Boot application to use the Docker's hostname
+      - SPRING_DATA_MONGODB_HOST=mongo
+    ports:
+      - "8080:8080"
+    networks:
+      - network-reactive
+
+  quote-reactive-frontend:
+    build:
+      context: ../quote-reactive-frontend
+    image: quote-reactive-frontend-tpd
+    ports:
+      - "4200:1827"
+    networks:
+      - network-reactive
+
+volumes:
+  mongodata:
+
+networks:
+  network-reactive:

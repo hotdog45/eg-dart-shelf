@@ -1,0 +1,13 @@
+version: "2.6"
+
+services:
+  mongo:
+    image: mongo:4.4.15
+    hostname: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "${PWD}/mongodata:/data/db"
+
+volumes:
+  mongodata:
