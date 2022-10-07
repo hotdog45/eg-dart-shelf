@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'fooderlich_theme.dart';
 
+import 'fooderlich_theme.dart';
 import 'home.dart';
 
 void main() {
@@ -8,15 +8,11 @@ void main() {
 }
 
 class Fooderlich extends StatelessWidget {
-  const Fooderlich({Key? key}) : super(key: key);
-
+  const Fooderlich({super.key});
   @override
   Widget build(BuildContext context) {
-    // DO: Create theme
     final theme = FooderlichTheme.dark();
-    // DO: Apply Home widget
     return MaterialApp(
-      // DO: Add theme
       theme: theme,
       title: 'Fooderlich',
       home: const Home(),

@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../fooderlich_theme.dart';
 import 'circle_image.dart';
-import 'fooderlich_theme.dart';
 
 class AuthorCard extends StatefulWidget {
   final String authorName;
   final String title;
   final ImageProvider? imageProvider;
+
   const AuthorCard({
-    Key? key,
+    super.key,
     required this.authorName,
     required this.title,
     this.imageProvider,
-  }) : super(key: key);
+  });
 
   @override
-  State<AuthorCard> createState() => _AuthorCardState();
+  AuthorCardState createState() => AuthorCardState();
 }
 
-class _AuthorCardState extends State<AuthorCard> {
+class AuthorCardState extends State<AuthorCard> {
   bool _isFavorited = false;
+
   @override
   Widget build(BuildContext context) {
-    // DO: Replace return Container(...);
     return Container(
       padding: const EdgeInsets.all(16),
       child: Row(
-        // DO 3: add alignment
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
@@ -51,18 +51,16 @@ class _AuthorCardState extends State<AuthorCard> {
               ),
             ],
           ),
-          // DO 2: add IconButton
           IconButton(
-              icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
-              iconSize: 30,
-              color: Colors.red[400],
-              onPressed: () {
-                setState(() {
-                  _isFavorited = !_isFavorited;
-                });
-                const snackBar = SnackBar(content: Text('Favorite Pressed'));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }),
+            icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
+            iconSize: 30,
+            color: Colors.red[400],
+            onPressed: () {
+              setState(() {
+                _isFavorited = !_isFavorited;
+              });
+            },
+          ),
         ],
       ),
     );

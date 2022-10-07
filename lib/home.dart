@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 
-import 'card1.dart';
-import 'card2.dart';
-import 'card3.dart';
+import 'screens/explore_screen.dart';
+import 'screens/recipes_screen.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
-  // DO: Add state variabels and functions
+class HomeState extends State<Home> {
   int _selectedIndex = 0;
+
   static List<Widget> pages = <Widget>[
-    // DO: Replace with Card1
-    const Card1(),
-    // DO: Replace with Card2
-    const Card2(),
-    // DO: Replace with Card3
-    const Card3(),
+    // DO: Replace with ExploreScreen
+    ExploreScreen(),
+    // DO: Replace with RecipesScreen
+    RecipesScreen(),
+    Container(color: Colors.blue),
   ];
 
   void _onItemTapped(int index) {
@@ -38,26 +36,23 @@ class _HomeState extends State<Home> {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      // DO: Show selected tab
       body: pages[_selectedIndex],
-      // DO: Add bottom navigation bar
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-        // DO: Set selected tab bar
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: 'Card',
+            icon: Icon(Icons.explore),
+            label: 'Explore',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: 'Card2',
+            icon: Icon(Icons.book),
+            label: 'Recipes',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: 'Card1',
+            icon: Icon(Icons.list),
+            label: 'To Buy',
           ),
         ],
       ),
