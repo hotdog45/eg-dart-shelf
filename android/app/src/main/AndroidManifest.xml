@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gusrylmubarok.fooderlichapp.fooderlichapp">
+    package="com.gusrylmubarok.mobilef.mobilef">
    <application
-        android:label="fooderlichapp"
+        android:label="mobilef"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

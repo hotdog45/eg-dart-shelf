@@ -1,4 +1,4 @@
-package com.gusrylmubarok.fooderlichapp.fooderlichapp
+package com.gusrylmubarok.mobilef.mobilef
 
 import io.flutter.embedding.android.FlutterActivity
 
