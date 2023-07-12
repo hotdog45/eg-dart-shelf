@@ -30,32 +30,32 @@ resource "google_sql_user" "master_user" {
   instance = google_sql_database_instance.master.name
 }
 
-resource "google_sql_database" "conduit_db" {
-  name     = "conduit"
+resource "google_sql_database" "eds_db" {
+  name     = "eds"
   instance = google_sql_database_instance.master.name
 }
 
-resource "google_storage_bucket" "conduit_db_init_sql" {
-  name          = "conduit-db-init-sql-${random_id.db_name_suffix.hex}"
+resource "google_storage_bucket" "eds_db_init_sql" {
+  name          = "eds-db-init-sql-${random_id.db_name_suffix.hex}"
   location      = var.region
   force_destroy = true
 }
 
-resource "google_storage_bucket_object" "conduit_db_init_sql" {
+resource "google_storage_bucket_object" "eds_db_init_sql" {
   name   = "20220215161400_initial_create.sql"
   source = "../../../../../initdb/20220215161400_initial_create.sql"
-  bucket = google_storage_bucket.conduit_db_init_sql.name
+  bucket = google_storage_bucket.eds_db_init_sql.name
 }
 
 resource "google_storage_bucket_iam_member" "db_instance_master_sa_init_sql_bucket" {
-  bucket = google_storage_bucket.conduit_db_init_sql.name
+  bucket = google_storage_bucket.eds_db_init_sql.name
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_sql_database_instance.master.service_account_email_address}"
 }
 
-resource "null_resource" "conduit_db_import_init_sql" {
+resource "null_resource" "eds_db_import_init_sql" {
   provisioner "local-exec" {
-    command = "gcloud sql import sql ${google_sql_database_instance.master.name} gs://${google_storage_bucket.conduit_db_init_sql.name}/${google_storage_bucket_object.conduit_db_init_sql.name} --project=${var.project_id} --database=${google_sql_database.conduit_db.name} --quiet"
+    command = "gcloud sql import sql ${google_sql_database_instance.master.name} gs://${google_storage_bucket.eds_db_init_sql.name}/${google_storage_bucket_object.eds_db_init_sql.name} --project=${var.project_id} --database=${google_sql_database.eds_db.name} --quiet"
   }
   depends_on = [
     google_storage_bucket_iam_member.db_instance_master_sa_init_sql_bucket

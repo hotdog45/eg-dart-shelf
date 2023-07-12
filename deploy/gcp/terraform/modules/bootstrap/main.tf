@@ -1,4 +1,4 @@
-resource "google_project" "conduit" {
+resource "google_project" "eds" {
   name                = var.project_id
   project_id          = var.project_id
   org_id              = var.org_id
@@ -8,17 +8,17 @@ resource "google_project" "conduit" {
 
 # Artifact Registry
 resource "google_project_service" "artifactregistry_api" {
-  project            = google_project.conduit.project_id
+  project            = google_project.eds.project_id
   service            = "artifactregistry.googleapis.com"
   disable_on_destroy = false
 }
 
-resource "google_artifact_registry_repository" "conduit" {
+resource "google_artifact_registry_repository" "eds" {
   provider      = google-beta
-  project       = google_project.conduit.project_id
+  project       = google_project.eds.project_id
   location      = var.region
-  repository_id = "conduit-server"
-  description   = "Conduit Server App"
+  repository_id = "eds-server"
+  description   = "eds Server App"
   format        = "DOCKER"
 
   depends_on = [
@@ -28,8 +28,8 @@ resource "google_artifact_registry_repository" "conduit" {
 
 # Terraform State Bucket
 resource "google_storage_bucket" "terraform_state" {
-  project  = google_project.conduit.project_id
-  name     = "terraform-state-${google_project.conduit.project_id}"
+  project  = google_project.eds.project_id
+  name     = "terraform-state-${google_project.eds.project_id}"
   location = var.region
 
   uniform_bucket_level_access = true

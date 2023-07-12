@@ -7,7 +7,7 @@ output "db_port" {
 }
 
 output "db_name" {
-  value = google_sql_database.conduit_db.name
+  value = google_sql_database.eds_db.name
 }
 
 output "connection_name" {

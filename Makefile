@@ -22,11 +22,14 @@ exec:
 ################################################################################################
 ##### DOCKER
 ################################################################################################
-container-dev:
-	docker compose -f docker-compose-dev.yml up
+container-db:
+	docker compose -f docker-compose-db.yml up
 
 container:
 	docker compose -f docker-compose.yml up
 
 image:
 	docker build -f eg-dart-shelf .
+
+rm-data:
+	sudo rm -R postgres-data

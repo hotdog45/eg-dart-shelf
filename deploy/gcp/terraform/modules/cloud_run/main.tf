@@ -1,4 +1,4 @@
-data "google_project" "conduit" {
+data "google_project" "eds" {
 }
 
 provider "google" {
@@ -13,11 +13,11 @@ resource "google_project_service" "cloud_run_service" {
 resource "google_project_iam_member" "cloud_run_sa_sql_client_role" {
   project = var.project_id
   role    = "roles/cloudsql.client"
-  member  = "serviceAccount:${data.google_project.conduit.number}-compute@developer.gserviceaccount.com"
+  member  = "serviceAccount:${data.google_project.eds.number}-compute@developer.gserviceaccount.com"
 }
 
-resource "google_cloud_run_service" "conduit_server" {
-  name     = "conduit-server"
+resource "google_cloud_run_service" "eds_server" {
+  name     = "eds-server"
   location = var.region
 
   template {
@@ -92,10 +92,10 @@ data "google_iam_policy" "noauth" {
   }
 }
 
-resource "google_cloud_run_service_iam_policy" "conduit_server_noauth" {
-  location = google_cloud_run_service.conduit_server.location
-  project  = google_cloud_run_service.conduit_server.project
-  service  = google_cloud_run_service.conduit_server.name
+resource "google_cloud_run_service_iam_policy" "eds_server_noauth" {
+  location = google_cloud_run_service.eds_server.location
+  project  = google_cloud_run_service.eds_server.project
+  service  = google_cloud_run_service.eds_server.name
 
   policy_data = data.google_iam_policy.noauth.policy_data
 }
