@@ -15,7 +15,7 @@ import 'auth_helper.dart';
 import 'profiles_helper.dart';
 
 Uri createArticleUri() {
-  return Uri.parse(host + '/articles');
+  return Uri.parse('$host/articles');
 }
 
 Future<Response> createArticle(
@@ -63,7 +63,7 @@ Future<ArticleDto> createArticleAndDecode(UserDto author,
   final now = DateTime.now();
 
   expect(article.title, title);
-  expect(article.slug, slugify(author.username + ' ' + article.title));
+  expect(article.slug, slugify('${author.username} ${article.title}'));
   expect(article.description, description);
   expect(article.body, body);
   expect(now.difference(article.createdAt).inSeconds < 1, true);
@@ -91,7 +91,7 @@ Future<ArticleDto> createRandomArticleAndDecode(UserDto author,
 }
 
 Uri getArticleBySlugUri(String slug) {
-  return Uri.parse(host + '/articles/$slug');
+  return Uri.parse('$host/articles/$slug');
 }
 
 Future<Response> getArticleBySlug(String slug, {String? token}) async {
@@ -198,7 +198,7 @@ Future<MultipleArticlesDto> listArticlesAndDecode(
 }
 
 Uri updateArticleBySlugUri(String slug) {
-  return Uri.parse(host + '/articles/$slug');
+  return Uri.parse('$host/articles/$slug');
 }
 
 Future<Response> updateArticleBySlug(String slug,
@@ -246,7 +246,7 @@ Future<ArticleDto> updateArticleBySlugAndDecode(String slug,
 }
 
 Uri deleteArticleBySlugUri(String slug) {
-  return Uri.parse(host + '/articles/$slug');
+  return Uri.parse('$host/articles/$slug');
 }
 
 Future<Response> deleteArticleBySlug(String slug,
@@ -257,7 +257,7 @@ Future<Response> deleteArticleBySlug(String slug,
 }
 
 Uri favoriteArticleUri(String slug) {
-  return Uri.parse(host + '/articles/$slug/favorite');
+  return Uri.parse('$host/articles/$slug/favorite');
 }
 
 Future<Response> favoriteArticleBySlug(String slug,
@@ -279,7 +279,7 @@ Future<ArticleDto> favoriteArticleAndDecodeBySlug(String slug,
 }
 
 Uri unFavoriteArticleUri(String slug) {
-  return Uri.parse(host + '/articles/$slug/favorite');
+  return Uri.parse('$host/articles/$slug/favorite');
 }
 
 Future<Response> unFavoriteArticleBySlug(String slug,
@@ -301,7 +301,7 @@ Future<ArticleDto> unFavoriteArticleAndDecodeBySlug(String slug,
 }
 
 Uri createCommentUri(String slug) {
-  return Uri.parse(host + '/articles/$slug/comments');
+  return Uri.parse('$host/articles/$slug/comments');
 }
 
 Future<Response> createComment(String slug,
@@ -346,7 +346,7 @@ Future<CommentDto> createdRandomComment(String slug,
 }
 
 Uri getCommentsFromArticleUri(String slug) {
-  return Uri.parse(host + '/articles/$slug/comments');
+  return Uri.parse('$host/articles/$slug/comments');
 }
 
 Future<Response> getCommentsFromArticle(String slug, {String? token}) {
@@ -371,7 +371,7 @@ Future<MultipleCommentsDto> getCommentsFromArticleAndDecode(String slug,
 }
 
 Uri deleteCommentByIdUri({required String slug, required String commentId}) {
-  return Uri.parse(host + '/articles/$slug/comments/$commentId');
+  return Uri.parse('$host/articles/$slug/comments/$commentId');
 }
 
 Future<Response> deleteCommentById(
@@ -385,7 +385,7 @@ Future<Response> deleteCommentById(
 }
 
 Uri getTagsUri() {
-  return Uri.parse(host + '/tags');
+  return Uri.parse('$host/tags');
 }
 
 Future<Response> getTags() async {

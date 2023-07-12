@@ -140,9 +140,9 @@ class UsersService {
       await _validateUsernameOrThrow(username);
 
       if (sql == initialSql) {
-        sql = sql + ' SET username = @username';
+        sql = '$sql SET username = @username';
       } else {
-        sql = sql + ', username = @username';
+        sql = '$sql, username = @username';
       }
     }
 
@@ -150,9 +150,9 @@ class UsersService {
       await _validateEmailOrThrow(emailForUpdate);
 
       if (sql == initialSql) {
-        sql = sql + ' SET email = @emailForUpdate';
+        sql = '$sql SET email = @emailForUpdate';
       } else {
-        sql = sql + ', email = @emailForUpdate';
+        sql = '$sql, email = @emailForUpdate';
       }
     }
 
@@ -160,17 +160,17 @@ class UsersService {
       _validatePasswordOrThrow(password);
 
       if (sql == initialSql) {
-        sql = sql + " SET password_hash = crypt(@password, gen_salt('bf'))";
+        sql = "$sql SET password_hash = crypt(@password, gen_salt('bf'))";
       } else {
-        sql = sql + ", password_hash = crypt(@password, gen_salt('bf'))";
+        sql = "$sql, password_hash = crypt(@password, gen_salt('bf'))";
       }
     }
 
     if (bio != null && bio != user.bio) {
       if (sql == initialSql) {
-        sql = sql + ' SET bio = @bio';
+        sql = '$sql SET bio = @bio';
       } else {
-        sql = sql + ', bio = @bio';
+        sql = '$sql, bio = @bio';
       }
     }
 
@@ -178,17 +178,17 @@ class UsersService {
       _validateImageOrThrow(image);
 
       if (sql == initialSql) {
-        sql = sql + ' SET image = @image';
+        sql = '$sql SET image = @image';
       } else {
-        sql = sql + ', image = @image';
+        sql = '$sql, image = @image';
       }
     }
 
     var updatedEmail = email;
 
     if (sql != initialSql) {
-      sql = sql + ', updated_at = current_timestamp';
-      sql = sql + ' WHERE email = @email RETURNING email;';
+      sql = '$sql, updated_at = current_timestamp';
+      sql = '$sql WHERE email = @email RETURNING email;';
 
       final result = await connectionPool.query(sql, substitutionValues: {
         'email': email,

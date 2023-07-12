@@ -10,7 +10,7 @@ import 'auth_helper.dart';
 import 'user_and_password.dart';
 
 Uri registerUserUri() {
-  return Uri.parse(host + '/users');
+  return Uri.parse('$host/users');
 }
 
 Future<Response> registerUser(
@@ -61,7 +61,7 @@ Future<UserAndPassword> registerRandomUser() async {
 Future<UserAndPassword> registerRandomUserAndUpdateBioAndImage() async {
   final userAndPassword = await registerRandomUser();
 
-  final uri = Uri.parse(host + '/user');
+  final uri = Uri.parse('$host/user');
 
   final bio = faker.job.title();
   final image = faker.internet.httpsUrl();
@@ -85,11 +85,11 @@ Future<UserAndPassword> registerRandomUserAndUpdateBioAndImage() async {
 }
 
 Uri userLoginUri() {
-  return Uri.parse(host + '/users/login');
+  return Uri.parse('$host/users/login');
 }
 
 Uri getCurrentUserUri() {
-  return Uri.parse(host + '/user');
+  return Uri.parse('$host/user');
 }
 
 Future<Response> loginUser(
@@ -128,7 +128,7 @@ Future<UserDto> getCurrentUser(String token) async {
 }
 
 Uri updateUserUri() {
-  return Uri.parse(host + '/user');
+  return Uri.parse('$host/user');
 }
 
 Future<Response> updateUser(String token,

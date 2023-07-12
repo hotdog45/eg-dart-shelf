@@ -8,7 +8,7 @@ import '../test_fixtures.dart';
 import 'auth_helper.dart';
 
 Uri getProfileUriByUsername(String username) {
-  return Uri.parse(host + '/profiles/$username');
+  return Uri.parse('$host/profiles/$username');
 }
 
 Future<Response> getProfileByUsername(String username, {String? token}) async {
@@ -35,7 +35,7 @@ Future<ProfileDto> getProfileByUsernameAndDecode(String username,
 }
 
 Uri followUserByUsernameUri(String username) {
-  return Uri.parse(host + '/profiles/$username/follow');
+  return Uri.parse('$host/profiles/$username/follow');
 }
 
 Future<Response> followUserByUsername(String username,
@@ -57,7 +57,7 @@ Future<ProfileDto> followUserByUsernameAndDecode(String username,
 }
 
 Uri unfollowUserUri(String username) {
-  return Uri.parse(host + '/profiles/$username/follow');
+  return Uri.parse('$host/profiles/$username/follow');
 }
 
 Future<Response> unfollowUserByUsername(String username,

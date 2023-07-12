@@ -58,7 +58,7 @@ Future main(List<String> args) async {
   }
 
   if (isUnixSocket) {
-    dbHost = dbHost + '/.s.PGSQL.$dbPort';
+    dbHost = '$dbHost/.s.PGSQL.$dbPort';
   }
 
   final connectionPool = PgPool(PgEndpoint(

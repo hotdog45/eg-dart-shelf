@@ -10,7 +10,6 @@ import 'package:eg_dart_shelf/users/users_service.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-
 class ProfilesRouter {
   final ProfilesService profilesService;
   final UsersService usersService;

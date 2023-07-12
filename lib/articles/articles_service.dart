@@ -153,7 +153,7 @@ class ArticlesService {
         'SELECT id, author_id, title, description, body, tag_list, slug, created_at, updated_at, deleted_at FROM $articlesTable a WHERE deleted_at IS NULL';
 
     if (tag != null) {
-      sql = sql + ' AND @tag = ANY (tag_list)';
+      sql = '$sql AND @tag = ANY (tag_list)';
     }
 
     if (authorId != null) {
@@ -163,7 +163,7 @@ class ArticlesService {
         throw NotFoundException(message: 'Author not found');
       }
 
-      sql = sql + ' AND author_id = @authorId';
+      sql = '$sql AND author_id = @authorId';
     }
 
     if (favoritedByUserId != null) {
@@ -173,8 +173,8 @@ class ArticlesService {
         throw NotFoundException(message: 'User not found');
       }
 
-      sql = sql +
-          ' AND EXISTS (SELECT 1 FROM $favoritesTable f WHERE a.id = f.article_id AND f.user_id = @favoritedByUserId)';
+      sql =
+          '$sql AND EXISTS (SELECT 1 FROM $favoritesTable f WHERE a.id = f.article_id AND f.user_id = @favoritedByUserId)';
     }
 
     // See https://www.postgresql.org/docs/current/queries-limit.html
@@ -203,7 +203,7 @@ class ArticlesService {
       orderBy = defaultOrderBy;
     }
 
-    sql = sql + ' ORDER BY ${orderBy.property} ${orderBy.order.name}';
+    sql = '$sql ORDER BY ${orderBy.property} ${orderBy.order.name}';
 
     if (limit != null) {
       if (limit < 0) {
@@ -211,7 +211,7 @@ class ArticlesService {
             message: 'limit must be positive', parameterName: 'limit');
       }
 
-      sql = sql + ' LIMIT $limit';
+      sql = '$sql LIMIT $limit';
     }
 
     if (offset != null) {
@@ -220,10 +220,10 @@ class ArticlesService {
             message: 'offset must be positive', parameterName: 'offset');
       }
 
-      sql = sql + ' OFFSET $offset';
+      sql = '$sql OFFSET $offset';
     }
 
-    sql = sql + ';';
+    sql = '$sql;';
 
     final result = await connectionPool.query(sql, substitutionValues: {
       'tag': tag,
@@ -294,9 +294,9 @@ class ArticlesService {
       await _validateSlugOrThrow(slug);
 
       if (sql == initialSql) {
-        sql = sql + ' SET title = @title, slug = @slug';
+        sql = '$sql SET title = @title, slug = @slug';
       } else {
-        sql = sql + ', title = @title, slug = @slug';
+        sql = '$sql, title = @title, slug = @slug';
       }
     }
 
@@ -304,9 +304,9 @@ class ArticlesService {
       _validateDescriptionOrThrow(description);
 
       if (sql == initialSql) {
-        sql = sql + ' SET description = @description';
+        sql = '$sql SET description = @description';
       } else {
-        sql = sql + ', description = @description';
+        sql = '$sql, description = @description';
       }
     }
 
@@ -314,23 +314,23 @@ class ArticlesService {
       _validateBodyOrThrow(body);
 
       if (sql == initialSql) {
-        sql = sql + " SET body = @body";
+        sql = "$sql SET body = @body";
       } else {
-        sql = sql + ", body = @body";
+        sql = "$sql, body = @body";
       }
     }
 
     if (tagList != null) {
       if (sql == initialSql) {
-        sql = sql + " SET tag_list = @tagList";
+        sql = "$sql SET tag_list = @tagList";
       } else {
-        sql = sql + ", tag_list = @tagList";
+        sql = "$sql, tag_list = @tagList";
       }
     }
 
     if (sql != initialSql) {
-      sql = sql + ', updated_at = current_timestamp';
-      sql = sql + ' WHERE id = @articleId;';
+      sql = '$sql, updated_at = current_timestamp';
+      sql = '$sql WHERE id = @articleId;';
 
       await connectionPool.query(sql, substitutionValues: {
         'articleId': article.id,
@@ -687,11 +687,11 @@ class ArticlesService {
         throw NotFoundException(message: 'Article not found');
       }
 
-      sql = sql + ' AND article_id = @articleId';
+      sql = '$sql AND article_id = @articleId';
     }
 
     // Default ordering
-    sql = sql + ' ORDER BY created_at';
+    sql = '$sql ORDER BY created_at';
 
     final result = await connectionPool
         .query(sql, substitutionValues: {'articleId': articleId});
@@ -766,6 +766,6 @@ class ArticlesService {
   }
 
   String _makeSlug(String username, String title) {
-    return slugify(username + ' ' + title);
+    return slugify('$username $title');
   }
 }

@@ -31,7 +31,7 @@ void main() {
       final now = DateTime.now();
 
       expect(updatedArticle.title, title);
-      expect(updatedArticle.slug, slugify(author.username + ' ' + title));
+      expect(updatedArticle.slug, slugify('${author.username} $title'));
       expect(now.difference(updatedArticle.updatedAt).inSeconds < 1, true);
       expect(
           updatedArticle.createdAt.isAtSameMomentAs(updatedArticle.updatedAt),
@@ -47,7 +47,7 @@ void main() {
     test('Given title is empty should return 422', () async {
       final article = await createRandomArticleAndDecode(author);
 
-      final uri = Uri.parse(host + '/articles/${article.slug}');
+      final uri = Uri.parse('$host/articles/${article.slug}');
 
       final title = '';
 
@@ -72,7 +72,7 @@ void main() {
     test('Given title is whitespace should return 422', () async {
       final article = await createRandomArticleAndDecode(author);
 
-      final uri = Uri.parse(host + '/articles/${article.slug}');
+      final uri = Uri.parse('$host/articles/${article.slug}');
 
       final title = ' ';
 
@@ -125,7 +125,7 @@ void main() {
     test('Given description is empty should return 422', () async {
       final article = await createRandomArticleAndDecode(author);
 
-      final uri = Uri.parse(host + '/articles/${article.slug}');
+      final uri = Uri.parse('$host/articles/${article.slug}');
 
       final description = '';
 
@@ -150,7 +150,7 @@ void main() {
     test('Given description is whitespace should return 422', () async {
       final article = await createRandomArticleAndDecode(author);
 
-      final uri = Uri.parse(host + '/articles/${article.slug}');
+      final uri = Uri.parse('$host/articles/${article.slug}');
 
       final description = ' ';
 
@@ -203,7 +203,7 @@ void main() {
     test('Given body is empty should return 422', () async {
       final article = await createRandomArticleAndDecode(author);
 
-      final uri = Uri.parse(host + '/articles/${article.slug}');
+      final uri = Uri.parse('$host/articles/${article.slug}');
 
       final body = '';
 
@@ -228,7 +228,7 @@ void main() {
     test('Given title is whitespace should return 422', () async {
       final article = await createRandomArticleAndDecode(author);
 
-      final uri = Uri.parse(host + '/articles/${article.slug}');
+      final uri = Uri.parse('$host/articles/${article.slug}');
 
       final body = ' ';
 

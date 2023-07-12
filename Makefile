@@ -13,6 +13,12 @@ dep-installer:
 formatter:
 	dart format --output=none --set-exit-if-changed .
 
+prev-format:
+	dart fix --dry-run
+
+fix-format:
+	dart fix --apply
+
 analyzer:
 	dart analyze
 
